@@ -1,25 +1,34 @@
 fun main(args: Array<String>) {
-    // We can provide types
-    var name : String = "Akkas Ali"
-    println(name)
+    // '!!' converts a nullable type to a non-nullable type. If readLine() returns a null value
+    // a NullPointerException will be thrown instead of setting val age to null
+    val age = readLine()!!.toInt()
 
-    // Providing type is not mandatory
-    var anything = 12
-    println(anything)
+    val message : String
 
-    // However, providing type is required for deferred assignment
-    var anotherName : String
-    anotherName = "Abdul Kuddus"
-    print(anotherName)
+    // ***** Method 1 *****
+//    if(age < 18) {
+//        message = "You're too young to vote"
+//    } else if(age > 100) {
+//        message = "Congratulations!"
+//    } else {
+//        message = "You're allowed to vote"
+//    }
 
-    // Constant
-    val a : Char = 'a'
-    println(a)
+    // ***** Method 2 *****
+//    message = if (age < 18) {
+//        "You're too young to vote"
+//    } else if (age > 100) {
+//        "Congratulations!"
+//    } else {
+//        "You're allowed to vote"
+//    }
 
-    // String interpolation
-    var b : Double = 50.0
-    println("The value of b is $b and half of b is ${b/2}")
-    var c : Double = 100.0
-    println("The amount is $$c")
-    println("We can also print \$a")
+    // ***** Method 3 *****
+    message = when {
+        (age < 18) -> "You're too young to vote"
+        (age > 100) -> "Congratulations!"
+        else -> "You're allowed to vote"
+    }
+
+    println(message)
 }
