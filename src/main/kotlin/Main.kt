@@ -1,21 +1,26 @@
 fun main(args: Array<String>) {
-    val akkas = Player("Akkas Ali")
-    println(akkas)
-    akkas.showWeaponInfo()
+    println("Iterates from 0 to 10")
 
-    val kuddus = Player("Abdul Kuddus", 5, 10)
-    val newWeapon : Weapon = Weapon("Axe", 12)
-    kuddus.weapon = newWeapon
-    println(kuddus)
-    kuddus.showWeaponInfo()
+    for(i in 0..10){
+        println("$i squared is ${i * i}")
+    }
 
-    println("**********")
+    println("Iterates from 0 to 9")
 
-    val redPotion = Loot("Red Potion", LootType.POTION, 7.50)
-    val chestArmour = Loot("+3 Chest Armour", LootType.ARMOUR, 80.0)
+    for (i in 0 until 10) {
+        println("$i squared is ${i * i}")
+    }
 
-    akkas.inventory.add(redPotion)
-    akkas.inventory.add(chestArmour)
-    akkas.showInventory()
+    println("Iterates from 10 to 0")
+
+    for (i in 10 downTo 0) {
+        println("$i squared is ${i * i}")
+    }
+
+    println("Iterates from 10 to 0 with step of 2")
+
+    for (i in 10 downTo 0 step 2) {
+        println("$i squared is ${i * i}")
+    }
 
 }
