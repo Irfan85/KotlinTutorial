@@ -5,7 +5,7 @@ class Player (val name : String, val level : Int = 1) {
 
     var weapon : Weapon = Weapon("Fist", 1)
 
-    val inventory = ArrayList<Loot>()
+    private val inventory = ArrayList<Loot>()
 
     // We can also explicitly create secondary constructors if we want
     constructor(name : String, level: Int, lives : Int) : this(name, level) {
@@ -25,6 +25,19 @@ class Player (val name : String, val level : Int = 1) {
         }
 
         println("==========")
+    }
+
+    fun getLoot(item : Loot) {
+        inventory.add(item)
+    }
+
+    fun dropItem(item : Loot) : Boolean {
+        return if (inventory.contains(item)) {
+            inventory.remove(item)
+            true
+        } else {
+            false
+        }
     }
 
     override fun toString(): String {

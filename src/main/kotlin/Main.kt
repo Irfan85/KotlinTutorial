@@ -1,26 +1,17 @@
 fun main(args: Array<String>) {
-    println("Iterates from 0 to 10")
+    val akkas = Player("Akkas Ali")
 
-    for(i in 0..10){
-        println("$i squared is ${i * i}")
+    val redPotion = Loot("Red Potion", LootType.POTION, 7.50)
+    val chestArmour = Loot("+3 Chest Armour", LootType.ARMOUR, 80.0)
+
+    akkas.getLoot(redPotion)
+    akkas.getLoot(chestArmour)
+    akkas.showInventory()
+
+    if(akkas.dropItem(redPotion)) {
+        println("${redPotion.name} has been dropped")
+        akkas.showInventory()
+    } else {
+        println("${redPotion.name} is not present in the inventory")
     }
-
-    println("Iterates from 0 to 9")
-
-    for (i in 0 until 10) {
-        println("$i squared is ${i * i}")
-    }
-
-    println("Iterates from 10 to 0")
-
-    for (i in 10 downTo 0) {
-        println("$i squared is ${i * i}")
-    }
-
-    println("Iterates from 10 to 0 with step of 2")
-
-    for (i in 10 downTo 0 step 2) {
-        println("$i squared is ${i * i}")
-    }
-
 }
