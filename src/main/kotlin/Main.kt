@@ -14,4 +14,13 @@ fun main(args: Array<String>) {
     } else {
         println("${redPotion.name} is not present in the inventory")
     }
+
+    akkas.getLoot(redPotion)
+    akkas.showInventory()
+
+    if(akkas.dropItem("Red Potion")) {
+        akkas.showInventory()
+    } else {
+        println("${redPotion.name} is not present in the inventory")
+    }
 }

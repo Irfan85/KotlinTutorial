@@ -40,6 +40,12 @@ class Player (val name : String, val level : Int = 1) {
         }
     }
 
+    fun dropItem(itemName : String) : Boolean {
+        println("Dropping $itemName...")
+
+        return inventory.removeIf { it.name == itemName }
+    }
+
     override fun toString(): String {
         return "Player(name='$name', level=$level, lives=$lives, score=$score)"
     }
