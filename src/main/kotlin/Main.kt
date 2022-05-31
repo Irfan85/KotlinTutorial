@@ -9,4 +9,13 @@ fun main(args: Array<String>) {
     println(kuddus)
     kuddus.showWeaponInfo()
 
+    println("**********")
+
+    val redPotion = Loot("Red Potion", LootType.POTION, 7.50)
+    val chestArmour = Loot("+3 Chest Armour", LootType.ARMOUR, 80.0)
+
+    akkas.inventory.add(redPotion)
+    akkas.inventory.add(chestArmour)
+    akkas.showInventory()
+
 }
