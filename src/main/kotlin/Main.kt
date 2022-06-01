@@ -1,26 +1,27 @@
 fun main(args: Array<String>) {
-    val akkas = Player("Akkas Ali")
+    val enemy1 = Enemy("Enemy 1", 10, 5)
+    println(enemy1)
+    enemy1.takeDamage(6)
+    println(enemy1)
 
-    val redPotion = Loot("Red Potion", LootType.POTION, 7.50)
-    val chestArmour = Loot("+3 Chest Armour", LootType.ARMOUR, 80.0)
+    println("**********")
 
-    akkas.getLoot(redPotion)
-    akkas.getLoot(chestArmour)
-    akkas.showInventory()
+    val troll1 = Troll("Troll1")
+    println(troll1)
+    troll1.takeDamage(10)
+    println(troll1)
 
-    if(akkas.dropItem(redPotion)) {
-        println("${redPotion.name} has been dropped")
-        akkas.showInventory()
-    } else {
-        println("${redPotion.name} is not present in the inventory")
-    }
+    println("**********")
 
-    akkas.getLoot(redPotion)
-    akkas.showInventory()
+    val vampire1 = Vampire("Vampire 1")
+    println(vampire1)
+    vampire1.takeDamage(10)
+    println(vampire1)
 
-    if(akkas.dropItem("Red Potion")) {
-        akkas.showInventory()
-    } else {
-        println("${redPotion.name} is not present in the inventory")
-    }
+    println("**********")
+
+    val dracula = VampireKing("Dracula")
+    println(dracula)
+    dracula.takeDamage(50)
+    println(dracula)
 }
