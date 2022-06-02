@@ -1,12 +1,27 @@
-class User(var firstName: String, var lastName: String, var email: String) {}
+// Lambdas are like anonymous functions. We can declare lambdas like this
+val quadruple = { number: Int -> number * 4}
 
-// Extension functions allow us to define class functions outside the class
-// body. We can sometime avoid creating subclasses and use these instead.
-fun User.getFullName(): String {
-    return "$firstName $lastName"
+// We can also specify input and output type like this. If we do so, we don't hae to specify input
+// type in the function body
+val triplePower: (Int) -> Int = {number -> number * number * number}
+
+// A higher order function is such a function that takes a lambda as one of its parameters
+fun printStuff(foo: (Int) -> Int, input: Int, times: Int) {
+    // "repeat" is one of the many loops available in Kotlin
+    repeat(times) {
+        println(foo(input))
+    }
 }
-
 fun main(args: Array<String>) {
-    val user1 = User("Akkas", "Ali", "akkasali@gmail.com")
-    println(user1.getFullName())
+    println("Quadruple of 2 is: ${quadruple(2)}")
+    println("Triple power of 4 is: ${triplePower(4)}")
+
+    println("#########################")
+
+    printStuff(quadruple, 5, 4)
+
+    println("#########################")
+
+    printStuff(triplePower, 5, 6)
+
 }
