@@ -1,16 +1,19 @@
-// 'object's are singleton. Only one instance is allowed. Objects don't have constructors
-object Screen {
-    val width = 1920
-    val height = 1080
+class Student (var name: String, var id: String) {
+    // init block is called while creating an object. All the necessary codes that we want to
+    // run in the primary constructor goes inside the init block
+    init {
+        println("Init has been called")
+    }
 
-    fun getResolution(): String {
-        return "$width x $height"
+    // All the static variables and static methods goes inside the "companion object" block. Everyting
+    // inside the block belongs to the class itself
+    companion object {
+        val department = "CSE"
     }
 }
 
 fun main(args: Array<String>) {
-    // Note that we don't call any constructors while instantiating objects because there isn't any
-    val screen = Screen;
-
-    println(screen.getResolution())
+    println(Student.department)
+    
+    val student1 = Student("Akkas Ali", "12345")
 }
