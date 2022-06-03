@@ -19,7 +19,7 @@ val ColourfulShape.borderWidth: Int
 // Experiment with extension methods
 fun Shape.printInfo() = println("I'm a shape")
 
-fun ColourfulShape.printInto() = println("I'm a colourful shape")
+fun ColourfulShape.printInfo() = println("I'm a colourful shape")
 
 fun main(args: Array<String>) {
     // Let's test the extension functions
@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
 
     val colourfulShape1 = ColourfulShape(500, 500, "Blue")
     // Calls the printInfo() of the ColourfulShape class
-    colourfulShape1.printInto()
+    colourfulShape1.printInfo()
 
     // Now let's try it with polymorphism
     val shape2: Shape = ColourfulShape(640, 480, "Green")
