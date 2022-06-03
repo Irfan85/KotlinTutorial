@@ -1,19 +1,12 @@
-interface Colourful {
-    var color: String
-}
-
-// Delegates are singleton objects that contain some implementation of an interface that may be
-// frequently used
-object blueColored: Colourful {
-    override var color = "Blue"
-}
-
-// The 'by' keyword attaches a delegate to an interface. Here, we are delegating 'blueColored' implementation
-// by default. Also, we're giving the user to pass a custom implementation of Colourful interface if they want
-class Shape(var width: Double, var height: Double, colorType: Colourful = blueColored): Colourful by colorType
+data class User(var firstName: String, var lastName: String, var email: String)
 
 fun main(args: Array<String>) {
-    val shape1 = Shape(500.0, 500.0)
+    val user1 = User("Akkas", "Ali", "akkasali@gmail.com")
 
-    println(shape1.color)
+    // While destucturing, if a variable is not needed, an underscore ('-') can be placed in the
+    // place of that variable to skip it
+    val (a, _, c) = user1
+
+    println(a)
+    println(c)
 }
