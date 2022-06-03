@@ -1,19 +1,23 @@
-class Student (var name: String, var id: String) {
-    // init block is called while creating an object. All the necessary codes that we want to
-    // run in the primary constructor goes inside the init block
-    init {
-        println("Init has been called")
-    }
+// Abstract classes are open
+abstract class Person(var firstName: String, var lastName: String)
 
-    // All the static variables and static methods goes inside the "companion object" block. Everyting
-    // inside the block belongs to the class itself
-    companion object {
-        val department = "CSE"
+interface Printable {
+    fun printInfo()
+
+    // Interfaces can also have concrete methods
+    fun foo() {
+        println("Foo!")
+    }
+}
+class Student(fistName: String, lastName: String, var age: Int): Person(fistName, lastName), Printable {
+    override fun printInfo() {
+        println("Name: $firstName $lastName, Age: $age")
     }
 }
 
 fun main(args: Array<String>) {
-    println(Student.department)
-    
-    val student1 = Student("Akkas Ali", "12345")
+    val student1 = Student("Akkas","Ali", 20)
+
+    student1.printInfo()
+    student1.foo()
 }
