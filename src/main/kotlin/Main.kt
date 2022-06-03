@@ -1,23 +1,19 @@
-// Abstract classes are open
-abstract class Person(var firstName: String, var lastName: String)
-
-interface Printable {
-    fun printInfo()
-
-    // Interfaces can also have concrete methods
-    fun foo() {
-        println("Foo!")
-    }
+interface Colourful {
+    var color: String
 }
-class Student(fistName: String, lastName: String, var age: Int): Person(fistName, lastName), Printable {
-    override fun printInfo() {
-        println("Name: $firstName $lastName, Age: $age")
-    }
+
+// Delegates are singleton objects that contain some implementation of an interface that may be
+// frequently used
+object blueColored: Colourful {
+    override var color = "Blue"
 }
+
+// The 'by' keyword attaches a delegate to an interface. Here, we are delegating 'blueColored' implementation
+// by default. Also, we're giving the user to pass a custom implementation of Colourful interface if they want
+class Shape(var width: Double, var height: Double, colorType: Colourful = blueColored): Colourful by colorType
 
 fun main(args: Array<String>) {
-    val student1 = Student("Akkas","Ali", 20)
+    val shape1 = Shape(500.0, 500.0)
 
-    student1.printInfo()
-    student1.foo()
+    println(shape1.color)
 }
