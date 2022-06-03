@@ -1,5 +1,3 @@
-import java.awt.Color
-
 open class Shape(open val width: Int, open val height: Int) {
     companion object {
         // Constants are determined at compile time whereas vals are determined at runtime.
