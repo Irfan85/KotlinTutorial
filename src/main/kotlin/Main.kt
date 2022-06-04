@@ -1,36 +1,44 @@
-open class Shape(open val width: Int, open val height: Int) {
-    companion object {
-        // Constants are determined at compile time whereas vals are determined at runtime.
-        // So, we can't assign a const to the return value of a function.
-        // cons can only exist in static or global space
-        const val VERSION=1.0
-    }
-}
+open class Shape(open val width: Int, open val height: Int)
 
 open class ColourfulShape(width: Int, height: Int, color: String): Shape(width, height)
 
-// It is possible to add extension properties apart from extension variables
-// Both extension methods/properties only have access to the public components of the class
-val ColourfulShape.borderWidth: Int
-    get() = 5
+// By default, the type of generic will be <T: Any?> if we don't explicitly provide any type. The code would
+// look like this
+// class ShapeBox<T>(vararg val shape: T)
 
-// Experiment with extension methods
-fun Shape.printInfo() = println("I'm a shape")
+// The vararg parameter will be treated as an array of type T
 
-fun ColourfulShape.printInfo() = println("I'm a colourful shape")
+// The out type check is necessary if we want to check the type of variables that can be returned
+class ShapeBox<out T : Shape>(private vararg val shapes: T) {
+    fun printShapes() {
+        for (shape in shapes){
+            // This check function is provided by kotlin for assertion. If the boolean parameter is true, the
+            // assertion is valid and exception won't be thrown
+            check(!(shape.width == 0 || shape.height == 0)) {"ERROR: Invalid shape detected"}
+
+            println("Found: $shape")
+        }
+    }
+}
+
+// Dummy function for demonstration. Doesn't actualy add anything
+fun addItemTo(shapeBox: ShapeBox<Shape>){
+    println("Added!")
+}
 
 fun main(args: Array<String>) {
-    // Let's test the extension functions
-    val shape1 = Shape(500, 500)
-    // Calls the printInfo() of the Shape class
-    shape1.printInfo()
+    val colourfulShape1 = ColourfulShape(500, 500, "Red")
+    val colourfulShape2 = ColourfulShape(500, 500, "Blue")
+    val colourfulShape3 = ColourfulShape(640, 480, "Green")
 
-    val colourfulShape1 = ColourfulShape(500, 500, "Blue")
-    // Calls the printInfo() of the ColourfulShape class
-    colourfulShape1.printInfo()
+    // We could also write ShapeBox<ColourfulShape> on the right  side. But it's not necessary in kotlin
+    // because of automatic type inference
+    val myShapeBox = ShapeBox(colourfulShape1, colourfulShape2, colourfulShape3)
 
-    // Now let's try it with polymorphism
-    val shape2: Shape = ColourfulShape(640, 480, "Green")
-    // This will call the printInto() of Shape class as the reference is of type Shape
-    shape2.printInfo()
+    myShapeBox.printShapes()
+
+    println("#########################")
+
+    // If we didn't add the out keyword in the generic declaration, this would throw error
+    addItemTo(myShapeBox)
 }
