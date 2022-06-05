@@ -2,31 +2,34 @@ open class Shape(open val width: Int, open val height: Int)
 
 open class ColourfulShape(width: Int, height: Int, val color: String): Shape(width, height)
 
-// 'in' keyword checks type safety for parameters that are only taken as input for any function
-interface ShapePrinter<in T: Shape> {
-    fun printShape(shape : T)
-}
+class ShapeBox<T : Shape>(vararg val shapes: T)
 
-class MyShapePrinterImpl: ShapePrinter<ColourfulShape>{
-    override fun printShape(shape: ColourfulShape) {
-        println("Shape width: ${shape.width}")
-        println("Shape height: ${shape.height}")
-        println("Shape color: ${shape.color}")
+// 'out' and 'in' can be too restrictive. By using a generic function, we can avoid using 'out' keyword
+// for type variable in generic class definition
+// Methods can also be of generic type as well like java
+fun <T: Shape> printShapeBox(shapeBox: ShapeBox<T>){
+    for(shape in shapeBox.shapes){
+        println(shape)
     }
 }
 
-
-class ShapeBox<out T : Shape>(private vararg val shapes: T) {
-    fun printShapes(printer: ShapePrinter<T>) {
-        for (shape in shapes) {
-            printer.printShape(shape)
+// External Generic Function
+// The Star projection operator (*) targets ShapeBox classes of all types for extension
+// The below function is just for demonstration. It logically doesn't make much sense
+inline fun <reified T: Shape> ShapeBox<*>.countShapes(shapeBox: ShapeBox<T>): Int {
+    var shapeCount = 0
+    for(shape in shapes){
+        // We don't be able to use the is operator and some other functions as generics are proessed at compile
+        // time. In order to make generics available at runtime, we've to make generic type 'reified' and also
+        // have to make the function inline
+        if (shape !is T){
+            println("The shapebox has incompatible shapes")
         }
-    }
-}
 
-// Dummy function for demonstration. Doesn't actualy add anything
-fun addItemTo(shapeBox: ShapeBox<Shape>){
-    println("Added!")
+        shapeCount++
+    }
+
+    return shapeCount
 }
 
 fun main(args: Array<String>) {
@@ -36,6 +39,11 @@ fun main(args: Array<String>) {
 
     val myShapeBox = ShapeBox(colourfulShape1, colourfulShape2, colourfulShape3)
 
-    val shapePrinter = MyShapePrinterImpl()
-    myShapeBox.printShapes(shapePrinter)
+    // We could also write printShapeBox<ColourfulShape>(myShapeBox). However, it's not required because of
+    // Kotlin's automatic type inference
+    printShapeBox(myShapeBox)
+
+    // Yes it's wired but doing just for example
+    println(myShapeBox.countShapes(myShapeBox))
+
 }
