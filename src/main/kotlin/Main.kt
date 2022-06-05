@@ -1,52 +1,23 @@
-open class Shape(open val width: Int, open val height: Int)
+// Single Abstract Methods are commonly seen in many interfaces of Java API where an interface only contains
+// One method. Runnable, Callable are common examples of this which has a run() and call() method respectively
 
-open class ColourfulShape(width: Int, height: Int, val color: String): Shape(width, height)
-
-class ShapeBox<T : Shape>(vararg val shapes: T)
-
-// 'out' and 'in' can be too restrictive. By using a generic function, we can avoid using 'out' keyword
-// for type variable in generic class definition
-// Methods can also be of generic type as well like java
-fun <T: Shape> printShapeBox(shapeBox: ShapeBox<T>){
-    for(shape in shapeBox.shapes){
-        println(shape)
-    }
-}
-
-// External Generic Function
-// The Star projection operator (*) targets ShapeBox classes of all types for extension
-// The below function is just for demonstration. It logically doesn't make much sense
-// In Kotlin, functions are also objects. Inlining a function will actually place the logic of the function at
-// the place where the function is called. This reduces some object creation overhead. Inlines are best
-// suited for simple and frequently used functions
-inline fun <reified T: Shape> ShapeBox<*>.countShapes(shapeBox: ShapeBox<T>): Int {
-    var shapeCount = 0
-    for(shape in shapes){
-        // We don't be able to use the is operator and some other functions as generics are proessed at compile
-        // time. In order to make generics available at runtime, we've to make generic type 'reified' and also
-        // have to make the function inline
-        if (shape !is T){
-            println("The shapebox has incompatible shapes")
-        }
-
-        shapeCount++
-    }
-
-    return shapeCount
-}
-
+// In Kotlin, we can create an instance of an object that implements an interface using "object:" keyword
+// Thus we can avoid creating concrete implementation if we have no plan to use that object elsewhere
 fun main(args: Array<String>) {
-    val colourfulShape1 = ColourfulShape(500, 500, "Red")
-    val colourfulShape2 = ColourfulShape(500, 500, "Blue")
-    val colourfulShape3 = ColourfulShape(640, 480, "Green")
+    val tempObject1 = object: Runnable{
+        override fun run() {
+            println("Hello World from tempObject1!")
+        }
+    }
 
-    val myShapeBox = ShapeBox(colourfulShape1, colourfulShape2, colourfulShape3)
+    JavaRun.runNow(tempObject1)
 
-    // We could also write printShapeBox<ColourfulShape>(myShapeBox). However, it's not required because of
-    // Kotlin's automatic type inference
-    printShapeBox(myShapeBox)
+    // However, as Runnable is a has a Single Abstract Method (SAM), the entire code for run() can be written
+    // as a lambda in Kotlin
+    val tempObject2 = Runnable {
+        println("Hello World from tempObject2!")
+    }
 
-    // Yes it's wired but doing just for example
-    println(myShapeBox.countShapes(myShapeBox))
-
+    JavaRun.runNow(tempObject2)
+    
 }
