@@ -16,6 +16,9 @@ fun <T: Shape> printShapeBox(shapeBox: ShapeBox<T>){
 // External Generic Function
 // The Star projection operator (*) targets ShapeBox classes of all types for extension
 // The below function is just for demonstration. It logically doesn't make much sense
+// In Kotlin, functions are also objects. Inlining a function will actually place the logic of the function at
+// the place where the function is called. This reduces some object creation overhead. Inlines are best
+// suited for simple and frequently used functions
 inline fun <reified T: Shape> ShapeBox<*>.countShapes(shapeBox: ShapeBox<T>): Int {
     var shapeCount = 0
     for(shape in shapes){
