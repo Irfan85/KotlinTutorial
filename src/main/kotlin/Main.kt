@@ -1,23 +1,31 @@
-// Single Abstract Methods are commonly seen in many interfaces of Java API where an interface only contains
-// One method. Runnable, Callable are common examples of this which has a run() and call() method respectively
+fun sum(vararg integers: Int): Int{
+    var result = 0;
 
-// In Kotlin, we can create an instance of an object that implements an interface using "object:" keyword
-// Thus we can avoid creating concrete implementation if we have no plan to use that object elsewhere
+    for(integer in integers){
+    	    result += integer;
+    }
+
+    return result
+}
+
 fun main(args: Array<String>) {
-    val tempObject1 = object: Runnable{
-        override fun run() {
-            println("Hello World from tempObject1!")
-        }
-    }
+        // Apart from passing a variable number of parameters
+	// in a vararg taking function, we can also pass an entire
+	// array to it. However we have to use the speading operator
+	// (*) to send elements individually
 
-    JavaRun.runNow(tempObject1)
+	// The array has to be of a specific type
+	val numbers = intArrayOf(1, 2, 3, 4, 5, 6, 7)
 
-    // However, as Runnable is a has a Single Abstract Method (SAM), the entire code for run() can be written
-    // as a lambda in Kotlin
-    val tempObject2 = Runnable {
-        println("Hello World from tempObject2!")
-    }
+	var sumResult = sum(*numbers)
 
-    JavaRun.runNow(tempObject2)
-    
+	println(sumResult)
+
+	// If we have a list, we have to convert that to an array before
+	// using it as vararg
+	val numberList = listOf(10, 11, 12, 13, 14, 15)
+
+	sumResult = sum(*numberList.toIntArray())
+
+	println(sumResult)
 }
